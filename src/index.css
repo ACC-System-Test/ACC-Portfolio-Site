@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Bricolage Grotesque', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Custom utility classes */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+.hero-gradient {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=2070');
+  background-size: cover;
+  background-position: center;
+}
+
+.section-header-line::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background-color: #0084d1;
+  margin-top: 8px;
+}
+
+.flowchart-line {
+  height: 2px;
+  background-color: #94a3b8;
+}
+
+.flowchart-vertical-line {
+  width: 2px;
+  background-color: #94a3b8;
+}

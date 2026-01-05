@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 :root {
+  --primary-color: #0084d1;
+  --secondary-color: #001f3f;
+  --font-family: 'Bricolage Grotesque', sans-serif;
+  --border-radius: 1rem;
   font-family: 'Bricolage Grotesque', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
@@ -8,8 +12,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: var(--font-family);
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom utility classes */
@@ -21,7 +27,7 @@ body {
 }
 
 .hero-gradient {
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=2070');
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=2070');
   background-size: cover;
   background-position: center;
 }

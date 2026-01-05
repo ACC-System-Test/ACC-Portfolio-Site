@@ -44,16 +44,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li><button onClick={() => onNavigate(Page.SOLUTIONS)} className="text-gray-600 hover:text-[#0084d1] text-sm">Projects</button></li>
               <li><button onClick={() => onNavigate(Page.BLOG)} className="text-gray-600 hover:text-[#0084d1] text-sm">Blog</button></li>
               <li><button onClick={() => onNavigate(Page.CONTACT)} className="text-gray-600 hover:text-[#0084d1] text-sm">Contact Us</button></li>
+              <li><a href="/admin" className="text-gray-600 hover:text-[#0084d1] text-sm">Admin Portal</a></li>
             </ul>
           </div>
 
           {/* Contact Details or extra info */}
           <div>
-             <h3 className="text-lg font-bold mb-6 text-gray-900">Privacy & Terms</h3>
-             <ul className="space-y-4">
-               <li><a href="#" className="text-gray-600 hover:text-[#0084d1] text-sm">Privacy Policy</a></li>
-               <li><a href="#" className="text-gray-600 hover:text-[#0084d1] text-sm">Terms & Condition</a></li>
-             </ul>
+            <h3 className="text-lg font-bold mb-6 text-gray-900">Privacy & Terms</h3>
+            <ul className="space-y-4">
+              <li><a href="#" className="text-gray-600 hover:text-[#0084d1] text-sm">Privacy Policy</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-[#0084d1] text-sm">Terms & Condition</a></li>
+            </ul>
           </div>
         </div>
 

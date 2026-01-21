@@ -2,12 +2,29 @@ import React from 'react';
 import { Page } from '../types';
 import { MissionVisionSection, ExpertiseGrid, NewsGrid } from '../components/Sections';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
+import { DynamicSection } from '../components/DynamicSection';
+import { useData } from '../services/DataContext';
 
 interface HomeProps {
   setCurrentPage: (page: Page) => void;
 }
 
 export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
+  const { sections } = useData();
+  const homeSections = sections
+    .filter(s => s.page === 'home' || s.page === 'all')
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  if (homeSections.length > 0) {
+    return (
+      <div className="pb-24 animate-in fade-in duration-700">
+        {homeSections.map(section => (
+          <DynamicSection key={section.id} section={section} />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-24 pb-24 animate-in fade-in duration-700">
       {/* Hero Section */}

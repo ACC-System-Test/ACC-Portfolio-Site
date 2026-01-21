@@ -13,7 +13,7 @@ export interface Profile {
     role: string;
     bio: string;
     imageUrl: string;
-    type: 'Staff' | 'Volunteer' | 'Intern' | 'Board';
+    type: 'Staff' | 'Board' | 'Volunteer' | 'Intern';
 }
 
 export interface Project {
@@ -35,13 +35,12 @@ export interface Article {
     id: string;
     title: string;
     slug: string;
-    excerpt: string;
     content: string;
-    author: string;
+    excerpt: string;
+    imageUrl?: string;
     date: string;
+    featured: boolean;
     categoryId: string;
-    imageUrl: string;
-    featured?: boolean;
 }
 
 export interface Section {

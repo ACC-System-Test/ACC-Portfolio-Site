@@ -9,8 +9,8 @@ export const EventManager: React.FC = () => {
     const [currentEvent, setCurrentEvent] = useState<Partial<Event>>({});
     const [searchTerm, setSearchTerm] = useState("");
 
-    const filteredEvents = events.filter(e =>
-        e.title.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredEvents = (events || []).filter(e =>
+        e && e.title && e.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleSave = (e: React.FormEvent) => {

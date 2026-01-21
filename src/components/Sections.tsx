@@ -1,9 +1,10 @@
-
 import React from 'react';
 import { ArrowRight, Eye, Target, Rocket, ShieldCheck, Search, Code, LifeBuoy, FileSearch, Zap } from 'lucide-react';
+import { useData } from '../services/DataContext';
 
 export const MissionVisionSection = () => {
   const cards = [
+    // ... (omitted same content)
     {
       title: "Our Goal",
       icon: Target,
@@ -104,20 +105,35 @@ export const ExpertiseGrid = () => {
 };
 
 export const NewsGrid = () => {
-  const news = [
-    { cat: "Consulting Business/ invena", title: "Future Proofing Your Business Approach", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" },
-    { cat: "Solution Model / invena", title: "Redefining Excellence in Business Strategy", img: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=400" },
-    { cat: "Modern Business/ invena", title: "Optimizing Your Approach to Modern", img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=400" },
-  ];
+  const { articles, categories, setActiveArticle } = useData();
+
+  // Show latest 3 articles
+  const latestNews = articles.slice(0, 3);
+
+  const getCategoryName = (catId: string) => {
+    return categories.find(c => c.id === catId)?.name || 'General';
+  };
+
+  if (latestNews.length === 0) {
+    return (
+      <div className="py-12 text-center text-gray-500 italic">
+        No news articles yet. Stay tuned!
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-12">
-      {news.map((item, i) => (
-        <div key={i} className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all">
-          <img src={item.img} className="w-full h-48 object-cover" alt="" />
-          <div className="p-8">
-            <p className="text-[#0084d1] text-xs font-semibold mb-3">{item.cat}</p>
-            <h4 className="text-lg font-bold text-gray-900 mb-6 leading-tight">{item.title}</h4>
+      {latestNews.map((item, i) => (
+        <div
+          key={item.id}
+          onClick={() => setActiveArticle(item)}
+          className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all h-full flex flex-col cursor-pointer group"
+        >
+          <img src={item.imageUrl || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" alt={item.title} />
+          <div className="p-8 flex-1 flex flex-col">
+            <p className="text-[#0084d1] text-xs font-semibold mb-3 uppercase tracking-wider">{getCategoryName(item.categoryId)}</p>
+            <h4 className="text-lg font-bold text-gray-900 mb-6 leading-tight flex-1">{item.title}</h4>
             <button className="flex items-center gap-2 text-gray-900 font-medium text-sm hover:gap-4 transition-all">
               <span
                 className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center">

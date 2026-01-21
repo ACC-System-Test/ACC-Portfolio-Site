@@ -1,7 +1,9 @@
 import React from 'react';
 import { ShieldCheck, ArrowRight } from 'lucide-react';
+import { useData } from '../services/DataContext';
 
 export const Solutions: React.FC = () => {
+    const { projects } = useData();
     return (
         <div className="space-y-24 pb-24 animate-in fade-in duration-700">
             <section className="hero-gradient h-[60vh] min-h-[500px] flex items-center relative">
@@ -19,20 +21,52 @@ export const Solutions: React.FC = () => {
                     <h2 className="text-4xl font-bold text-gray-900">Empowering every sector</h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                    {[
-                        { title: "Public Sector Defense", desc: "Strengthening government data integrity and citizen services protection.", color: "bg-blue-50" },
-                        { title: "Enterprise Resilience", desc: "Advanced threat detection and incident response for the African business sector.", color: "bg-indigo-50" },
-                        { title: "Academic Outreach", desc: "Developing world-class cybersecurity curricula for universities and technical colleges.", color: "bg-sky-50" }
-                    ].map((item, i) => (
-                        <div key={i} className={`${item.color} p-12 rounded-[2.5rem] border border-black/5 hover:scale-[1.02] transition-transform`}>
-                            <ShieldCheck size={48} className="text-[#0084d1] mb-8" />
-                            <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                            <p className="text-gray-600 leading-relaxed mb-8">{item.desc}</p>
-                            <button className="font-bold text-[#0084d1] flex items-center gap-2 group">
-                                Learn More <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                            </button>
+                    {projects.length > 0 ? projects.map((project, i) => (
+                        <div key={project.id} className="group bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all overflow-hidden flex flex-col h-full">
+                            <div className="aspect-video relative overflow-hidden">
+                                <img
+                                    src={project.imageUrl || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800'}
+                                    alt={project.title}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div className="absolute top-6 right-6">
+                                    <span className={`text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full backdrop-blur-md shadow-lg ${project.status === 'Ongoing' ? 'bg-orange-500/90 text-white' :
+                                        project.status === 'Completed' ? 'bg-green-500/90 text-white' : 'bg-blue-500/90 text-white'
+                                        }`}>
+                                        {project.status}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="p-10 flex-1 flex flex-col">
+                                <div className="mb-6">
+                                    <ShieldCheck size={32} className="text-[#0084d1] mb-6" />
+                                    <h3 className="text-2xl font-bold mb-4 text-gray-900 leading-tight">{project.title}</h3>
+                                    <p className="text-gray-600 leading-relaxed line-clamp-3">{project.description}</p>
+                                </div>
+
+                                <div className="mt-auto">
+                                    {project.link ? (
+                                        <a
+                                            href={project.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 font-bold text-[#0084d1] hover:gap-4 transition-all"
+                                        >
+                                            View Project Dashboard <ArrowRight size={18} />
+                                        </a>
+                                    ) : (
+                                        <button className="inline-flex items-center gap-2 font-bold text-gray-400 cursor-not-allowed">
+                                            Details Restricted <ShieldCheck size={18} />
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                    ))}
+                    )) : (
+                        <div className="col-span-full py-12 text-center text-gray-400 italic bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+                            Our security solutions and ongoing initiatives will be displayed here shortly.
+                        </div>
+                    )}
                 </div>
             </section>
 

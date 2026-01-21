@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useData } from '../services/DataContext';
 import { Section } from '../services/types';
 import { GripVertical, Trash2, Edit, Plus, X, Layers, Image, Users, Briefcase, FileText, CheckSquare, Map, Eye } from 'lucide-react';
+import { ImageUpload } from '../components/ImageUpload';
 
 export const SectionManager: React.FC = () => {
     const { sections, categories, addSection, updateSection, deleteSection } = useData();
@@ -15,7 +16,7 @@ export const SectionManager: React.FC = () => {
         const sectionData = {
             ...currentSection,
             page: currentSection.page || selectedPage,
-            order: currentSection.order || sections.filter(s => s.page === (currentSection.page || selectedPage)).length + 1
+            order: currentSection.order || (sections || []).filter(s => s.page === (currentSection.page || selectedPage)).length + 1
         } as Section;
 
         if (currentSection.id) {
@@ -165,46 +166,53 @@ export const SectionManager: React.FC = () => {
                                         <Image className="text-[#0084d1]" size={24} />
                                         <h3 className="font-bold text-lg text-gray-900">Banner Content</h3>
                                     </div>
-                                    <div className="space-y-3">
-                                        <label className="text-sm font-bold text-gray-700">Headline</label>
-                                        <input
-                                            value={currentSection.sourceConfig?.heroTitle || ''}
-                                            onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroTitle: e.target.value } })}
-                                            placeholder="Enter a catchy headline..."
-                                            className="w-full border border-gray-200 rounded-xl p-4 bg-white focus:ring-2 focus:ring-[#0084d1] outline-none"
+                                    <div className="space-y-6">
+                                        <ImageUpload
+                                            label="Banner Background Image"
+                                            value={currentSection.sourceConfig?.imageUrl || ''}
+                                            onChange={url => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, imageUrl: url } })}
                                         />
-                                    </div>
-                                    <div className="space-y-3">
-                                        <label className="text-sm font-bold text-gray-700">Subtitle</label>
-                                        <textarea
-                                            value={currentSection.sourceConfig?.heroSubtitle || ''}
-                                            onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroSubtitle: e.target.value } })}
-                                            placeholder="Enter a descriptive subtitle..."
-                                            className="w-full border border-gray-200 rounded-xl p-4 bg-white h-32 focus:ring-2 focus:ring-[#0084d1] outline-none resize-none"
-                                        />
-                                    </div>
-                                    {currentSection.type === 'hero' && (
-                                        <div className="grid grid-cols-2 gap-6">
-                                            <div className="space-y-3">
-                                                <label className="text-sm font-bold text-gray-700">CTA Text</label>
-                                                <input
-                                                    value={currentSection.sourceConfig?.heroCtaText || ''}
-                                                    onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroCtaText: e.target.value } })}
-                                                    placeholder="e.g. Get Started"
-                                                    className="w-full border border-gray-200 rounded-xl p-4 bg-white"
-                                                />
-                                            </div>
-                                            <div className="space-y-3">
-                                                <label className="text-sm font-bold text-gray-700">CTA Link</label>
-                                                <input
-                                                    value={currentSection.sourceConfig?.heroCtaLink || ''}
-                                                    onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroCtaLink: e.target.value } })}
-                                                    placeholder="e.g. /solutions"
-                                                    className="w-full border border-gray-200 rounded-xl p-4 bg-white"
-                                                />
-                                            </div>
+                                        <div className="space-y-3">
+                                            <label className="text-sm font-bold text-gray-700">Headline</label>
+                                            <input
+                                                value={currentSection.sourceConfig?.heroTitle || ''}
+                                                onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroTitle: e.target.value } })}
+                                                placeholder="Enter a catchy headline..."
+                                                className="w-full border border-gray-200 rounded-xl p-4 bg-white focus:ring-2 focus:ring-[#0084d1] outline-none"
+                                            />
                                         </div>
-                                    )}
+                                        <div className="space-y-3">
+                                            <label className="text-sm font-bold text-gray-700">Subtitle</label>
+                                            <textarea
+                                                value={currentSection.sourceConfig?.heroSubtitle || ''}
+                                                onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroSubtitle: e.target.value } })}
+                                                placeholder="Enter a descriptive subtitle..."
+                                                className="w-full border border-gray-200 rounded-xl p-4 bg-white h-32 focus:ring-2 focus:ring-[#0084d1] outline-none resize-none"
+                                            />
+                                        </div>
+                                        {currentSection.type === 'hero' && (
+                                            <div className="grid grid-cols-2 gap-6">
+                                                <div className="space-y-3">
+                                                    <label className="text-sm font-bold text-gray-700">CTA Text</label>
+                                                    <input
+                                                        value={currentSection.sourceConfig?.heroCtaText || ''}
+                                                        onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroCtaText: e.target.value } })}
+                                                        placeholder="e.g. Get Started"
+                                                        className="w-full border border-gray-200 rounded-xl p-4 bg-white text-sm"
+                                                    />
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <label className="text-sm font-bold text-gray-700">CTA Link</label>
+                                                    <input
+                                                        value={currentSection.sourceConfig?.heroCtaLink || ''}
+                                                        onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, heroCtaLink: e.target.value } })}
+                                                        placeholder="e.g. /solutions"
+                                                        className="w-full border border-gray-200 rounded-xl p-4 bg-white text-sm"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             )}
 
@@ -250,6 +258,7 @@ export const SectionManager: React.FC = () => {
                                             >
                                                 <option value="latest">Latest Updates</option>
                                                 <option value="category">Specific Category</option>
+                                                <option value="projects">Projects Source</option>
                                             </select>
                                         </div>
                                         {currentSection.sourceType === 'category' && (
@@ -264,7 +273,7 @@ export const SectionManager: React.FC = () => {
                                                     className="w-full border border-gray-200 rounded-xl p-4 bg-white"
                                                 >
                                                     <option value="">Choose a category...</option>
-                                                    {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                                    {(categories || []).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                                                 </select>
                                             </div>
                                         )}
@@ -300,6 +309,25 @@ export const SectionManager: React.FC = () => {
                                             <option value="Volunteer">Volunteers Only</option>
                                         </select>
                                     </div>
+                                </div>
+                            )}
+
+                            {currentSection.type === 'projects' && (
+                                <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-6">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Briefcase className="text-[#0084d1]" size={24} />
+                                        <h3 className="font-bold text-lg text-gray-900">Project Configuration</h3>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-sm font-bold text-gray-700">Display Limit</label>
+                                        <input
+                                            type="number"
+                                            value={currentSection.sourceConfig?.limit || 3}
+                                            onChange={e => setCurrentSection({ ...currentSection, sourceConfig: { ...currentSection.sourceConfig, limit: parseInt(e.target.value) } })}
+                                            className="w-full border border-gray-200 rounded-xl p-4 bg-white focus:ring-2 focus:ring-[#0084d1] outline-none"
+                                        />
+                                    </div>
+                                    <p className="text-xs text-gray-500 italic">This will display the most recent projects up to the specified limit.</p>
                                 </div>
                             )}
                         </div>
@@ -350,37 +378,40 @@ export const SectionManager: React.FC = () => {
             </button>
 
             <div className="space-y-4">
-                {sections.filter(s => s.page === selectedPage).sort((a, b) => a.order - b.order).map((section, index) => (
-                    <div key={section.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between group hover:shadow-md transition-all relative overflow-hidden">
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0084d1]" style={{ backgroundColor: 'var(--primary-color)' }}></div>
-                        <div className="flex items-center gap-6">
-                            <span className="p-2 text-gray-300 hover:text-gray-600 cursor-move"><GripVertical size={20} /></span>
-                            <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0084d1] flex items-center justify-center">
-                                {getTypeIcon(section.type)}
+                {(sections || [])
+                    .filter(s => s && s.page === selectedPage)
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .map((section, index) => (
+                        <div key={section.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between group hover:shadow-md transition-all relative overflow-hidden">
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0084d1]" style={{ backgroundColor: 'var(--primary-color)' }}></div>
+                            <div className="flex items-center gap-6">
+                                <span className="p-2 text-gray-300 hover:text-gray-600 cursor-move"><GripVertical size={20} /></span>
+                                <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#0084d1] flex items-center justify-center">
+                                    {getTypeIcon(section.type)}
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-lg text-gray-900 flex items-center gap-3">
+                                        {section.title}
+                                        <span className="text-xs font-bold px-2 py-1 bg-gray-100 text-gray-500 rounded-full uppercase tracking-wider">{section.type}</span>
+                                    </h3>
+                                    <p className="text-sm text-gray-400">Order: {section.order}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="font-bold text-lg text-gray-900 flex items-center gap-3">
-                                    {section.title}
-                                    <span className="text-xs font-bold px-2 py-1 bg-gray-100 text-gray-500 rounded-full uppercase tracking-wider">{section.type}</span>
-                                </h3>
-                                <p className="text-sm text-gray-400">Order: {section.order}</p>
+                            <div className="flex gap-2">
+                                <a href={`/${selectedPage === 'home' ? '' : selectedPage}`} target="_blank" rel="noopener noreferrer" className="p-3 text-gray-400 hover:text-[#0084d1] hover:bg-blue-50 rounded-xl transition-all" title="Preview on Site">
+                                    <Eye size={20} />
+                                </a>
+                                <button onClick={() => handleEdit(section)} className="p-3 text-gray-400 hover:text-[#0084d1] hover:bg-blue-50 rounded-xl transition-all" title="Edit Section">
+                                    <Edit size={20} />
+                                </button>
+                                <button onClick={() => handleDelete(section.id)} className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Delete Section">
+                                    <Trash2 size={20} />
+                                </button>
                             </div>
                         </div>
-                        <div className="flex gap-2">
-                            <a href={`/${selectedPage === 'home' ? '' : selectedPage}`} target="_blank" rel="noopener noreferrer" className="p-3 text-gray-400 hover:text-[#0084d1] hover:bg-blue-50 rounded-xl transition-all" title="Preview on Site">
-                                <Eye size={20} />
-                            </a>
-                            <button onClick={() => handleEdit(section)} className="p-3 text-gray-400 hover:text-[#0084d1] hover:bg-blue-50 rounded-xl transition-all" title="Edit Section">
-                                <Edit size={20} />
-                            </button>
-                            <button onClick={() => handleDelete(section.id)} className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all" title="Delete Section">
-                                <Trash2 size={20} />
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    ))}
 
-                {sections.filter(s => s.page === selectedPage).length === 0 && (
+                {(sections || []).filter(s => s.page === selectedPage).length === 0 && (
                     <div className="text-center py-16">
                         <Layers size={48} className="mx-auto text-gray-200 mb-4" />
                         <h3 className="text-lg font-bold text-gray-900">No Sections Yet</h3>

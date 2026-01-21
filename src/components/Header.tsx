@@ -75,7 +75,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
 
           <button
             onClick={() => handleNavigate(Page.CONTACT)}
-            className="hidden md:block bg-[#0084d1] hover:bg-[#006bb0] text-white px-6 py-2 rounded-full text-sm font-semibold transition-all shadow-lg hover:shadow-xl"
+            className="hidden md:block bg-[#0084d1] hover:bg-[#006bb0] text-white px-6 py-4 rounded-full text-sm font-semibold transition-all shadow-lg hover:shadow-xl"
           >
             Reach Us
           </button>

@@ -2,8 +2,13 @@ import React from 'react';
 import { MissionVisionSection } from '../components/Sections';
 import { OrganizationStructure } from '../components/OrganizationStructure';
 import { Linkedin, Twitter } from 'lucide-react';
+import { useData } from '../services/DataContext';
 
 export const About: React.FC = () => {
+    const { profiles } = useData();
+
+    // Filter for Staff/Board to show in leadership section
+    const leadership = profiles.filter(p => p.type === 'Staff' || p.type === 'Board');
     return (
         <div className="space-y-24 pb-24 animate-in fade-in duration-700">
             <section className="hero-gradient h-[60vh] min-h-[500px] flex items-center relative">
@@ -27,16 +32,11 @@ export const About: React.FC = () => {
                         <h2 className="text-4xl font-bold text-gray-900">Guided by visionaries</h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[
-                            { name: "Tuyishimire Jean Bonfils", role: "Chief Executive Officer", img: "https://i.pravatar.cc/300?img=68" },
-                            { name: "Dr. Elena Mbeki", role: "Head of Research", img: "https://i.pravatar.cc/300?img=44" },
-                            { name: "Marcus Okafor", role: "Strategic Partnerships", img: "https://i.pravatar.cc/300?img=11" },
-                            { name: "Amina Diallo", role: "Policy & Advocacy", img: "https://i.pravatar.cc/300?img=32" }
-                        ].map((leader, i) => (
-                            <div key={i} className="group relative overflow-hidden rounded-[2.5rem] bg-gray-50 aspect-[4/5] shadow-sm hover:shadow-2xl transition-all">
-                                <img src={leader.img} alt={leader.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        {leadership.length > 0 ? leadership.map((leader, i) => (
+                            <div key={leader.id} className="group relative overflow-hidden rounded-[2.5rem] bg-gray-50 aspect-[4/5] shadow-sm hover:shadow-2xl transition-all">
+                                <img src={leader.imageUrl || `https://i.pravatar.cc/300?img=${i + 10}`} alt={leader.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                                <div className="absolute bottom-0 left-0 p-8 text-white">
+                                <div className="absolute bottom-0 left-0 p-8 text-white w-full">
                                     <h4 className="text-2xl font-bold mb-1">{leader.name}</h4>
                                     <p className="text-white/70 font-medium mb-4">{leader.role}</p>
                                     <div className="flex gap-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
@@ -45,7 +45,11 @@ export const About: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        )) : (
+                            <div className="col-span-full py-12 text-center text-gray-400 italic">
+                                Leadership details coming soon.
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>

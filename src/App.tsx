@@ -8,6 +8,8 @@ import { Solutions } from './pages/Solutions';
 import { News } from './pages/News';
 import { Contact } from './pages/Contact';
 
+import { ArticleModal } from './components/ArticleModal';
+
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>(Page.HOME);
 
@@ -19,6 +21,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-white selection:bg-[#0084d1] selection:text-white">
       <Header currentPage={currentPage} onNavigate={setCurrentPage} />
+      <ArticleModal />
 
       <main className="pt-0">
         {currentPage === Page.HOME && <Home setCurrentPage={setCurrentPage} />}
